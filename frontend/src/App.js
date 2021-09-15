@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import NavBar from './OtherFiles/NavBar';
+import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Footer from './OtherFiles/Footer';
-import Home from './OtherFiles/Home';
-import AboutUs from './OtherFiles/AboutUs';
-import ContactUs from './OtherFiles/ContactUs';
-import LoginReg from './OtherFiles/LoginReg';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
+import LoginReg from './components/LoginReg';
 
 
 function App() {
