@@ -5,8 +5,12 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      animation: ['hover', 'focus'],
+      transitionProperty: ['hover', 'focus'],
+    },
   },
   plugins: [],
   important: true,
+  
 }
