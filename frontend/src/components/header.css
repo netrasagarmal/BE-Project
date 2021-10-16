@@ -1,0 +1,7 @@
+.active {
+   border-bottom: solid white;
+}
+
+.homebg {
+   background-image: '/image/bg-image.jpg';
+}
