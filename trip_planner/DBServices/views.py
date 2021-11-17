@@ -1,6 +1,12 @@
 from django.shortcuts import render
+from django.shortcuts import render
+# to allow other domains easily access our methods
+from django.views.decorators.csrf import csrf_exempt
+from pyasn1.type.univ import Null
+#json parser to parse the in concomming data into the data model
+from rest_framework.parsers import JSONParser
+from django.http.response import JsonResponse
 import pyrebase
-
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -9,7 +15,7 @@ from firebase_admin import firestore
 # Create your views here.
 
 #config file for realtime database
-config = {
+realtimeDBConfig = {
     "apiKey": "AIzaSyDVb384H6b84ZpBN0LCElUbQC4CKJZLYJo",
     "authDomain": "trip-planner-9213c.firebaseapp.com",
     "databaseURL": "https://trip-planner-9213c-default-rtdb.firebaseio.com",
@@ -20,7 +26,7 @@ config = {
 }
 
 #config file for firestore database
-firebaseConfig = {
+firestoreDBConfig = {
   "type": "service_account",
   "project_id": "trip-planner-9213c",
   "private_key_id": "9cca2ed20be5151f93e22481a429c4e944d677d2",
@@ -33,46 +39,102 @@ firebaseConfig = {
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-d214u%40trip-planner-9213c.iam.gserviceaccount.com"
 }
 
-# Realtime Database
-firebase = pyrebase.initialize_app(config)
-authe = firebase.auth()
-database = firebase.database()
+"""# Realtime Database
+firebase = Null
+if(firebase == Null):
+    firebase = pyrebase.initialize_app(realtimeDBConfig)
+    authe = firebase.auth()
+    rdb = firebase.database()
 
 #Firestore Database
-# Use a service account
-cred = credentials.Certificate(firebaseConfig)
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+cred = Null
+if (cred == Null):
+    cred = credentials.Certificate(firestoreDBConfig)
+    firebase_admin.initialize_app(cred)
+    fdb = firestore.client()"""
+
+"""
+ContName: Collection
+
+(Continents)Asia: document(contains fields)
+
+(Countries)India: collection
+
+(States)maharashatra: document(contains fields)
+
+(Cities)Pune: collection
+
+(Tourist Places)Agakhan Palace: document(contains fields)
+"""
+
+
+@csrf_exempt
+# Normally when you make a request via a form you want the form being submitted to your view to 
+# originate from your website and not come from some other domain. To ensure that this happens, you 
+# can put a csrf token in your form for your view to recognize. If you add @csrf_exempt to the top 
+# of your view, then you are basically telling the view that it doesn't need the token. This is a 
+# security exemption that you should take seriously.
+
+
+
+def getContinent():
+    cred = credentials.Certificate(firestoreDBConfig)
+    firebase_admin.initialize_app(cred)
+    fdb = firestore.client()
+
+    continents = fdb.collection('ContName')
+    contList = continents.stream()
+    continentList = []
+    
+    for continent in contList:
+        #print continents(document)
+        continentList.append(continent.id)
+    return continentList
+
+def getCountry(Cont):
+
+    continents = fdb.collection('ContName')
+    contList = continents.stream()
+    countryList = []
+    
+    for continent in contList:
+        if(continent.id == Cont):
+            for country in continent.reference.collections():
+                countryList.append(country.id)
+            break
+    return countryList
+
+def getState():
+    #print documents in collection
+    continentList = []
+    for continent in contList:
+        #print continents(document)
+        continentList.append(continent.id)
+    return continentList
+
+def getCity():
+    #print documents in collection
+    continentList = []
+    for continent in contList:
+        #print continents(document)
+        continentList.append(continent.id)
+    return continentList
+
+def getPlace():
+    #print documents in collection
+    continentList = []
+    for continent in contList:
+        #print continents(document)
+        continentList.append(continent.id)
+    return continentList
+
+
+
+print(getContinent())
+print('\n\n')
+print(getCountry('Asia'))   
+
 
 
 def Home(request):
-
-    #Realtime Database
-    print("- - - - - - - - - - - - - - - - Realtime Database - - - - - - - - - - - - - - - -")
-    ContName = database.child('Data').child('TouristPlacesData').child('ContinentName').get().val()
-
-    print("- - - - - - - - - - - - - - firestore Database - - - - - - - - - - - - - - - -")
-
-    #firestore Database
-    users_ref = db.collection(u'ContName')
-    docs = users_ref.stream()
-
-    for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')
-
-    print("- - - - - - Method 1- - - - - - - - - - - - - -")
-    doc1 = db.collection('ContName').document('Asia').collection('India').document('Maharashtra').collection('Pune').document('Agakhan Palace')
-    res = doc1.get().to_dict()
-    print(res)
-
-    print("- - - - - - Method 2- - - - - - - - - - - - - -")
-    avgrat = db.collection('ContName').document('Asia').collection('India').document('Maharashtra').collection('Pune').document('Agakhan Palace').get().to_dict()
-    #for field in avgrat:
-    #    print("Field_name : {field}, Field_type : {field.type}")
-    print(avgrat['ContName'])
-
-    
-
-    return render(request, 'index.html',{
-        "ContName": ContName,
-    })
+    return render(request, 'index.html')
