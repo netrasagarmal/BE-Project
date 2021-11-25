@@ -6,20 +6,19 @@ import { bannerData } from './BannerData';
 
 export const BannerCarousel = () => {
    return (
-      <div className="banner-wrapper">
+      <div>
          <CarouselProvider
             visibleSlides={1}
             step={1}
             naturalSlideWidth={400}
-            naturalSlideHeight={300}
+            naturalSlideHeight={210}
             totalSlides={bannerData.length}
             isPlaying={bannerData.length > 1}
             interval={9000}
-            className={bannerData.length === 1 && 'custom-banner'}
          >
             <Slider>
                {bannerData.map((banner, index) => (
-                  <Slide key={banner.id} className="banner-slide" index={index}>
+                  <Slide key={banner.id} index={index}>
                      <Banner bannerContent={banner} />
                   </Slide>
                ))}

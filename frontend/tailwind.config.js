@@ -16,6 +16,8 @@ module.exports = {
       animation: ['hover', 'focus'],
       transitionProperty: ['hover', 'focus'],
       ringOffsetWidth: ['hover', 'active'],
+      maxHeight: ['focus'],
+      borderStyle: ['hover', 'focus'],
     },
   },
   plugins: [],

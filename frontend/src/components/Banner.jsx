@@ -8,7 +8,7 @@ export const Banner = ({ bannerContent }) => {
             src={bannerContent.coverImage}
             alt={bannerContent.title + ' Image'}
          />
-         <div className="absolute rounded bottom-0 text-white drop-shadow blur-3 bg-gray-600 bg-opacity-60 mr-1 p-2">
+         <div className="absolute rounded-b bottom-0 mr-0.5 text-white drop-shadow blur-3 bg-gray-600 bg-opacity-60 p-2">
             <h1 className="text-2xl font-semibold underline">
                {bannerContent.title}
             </h1>
