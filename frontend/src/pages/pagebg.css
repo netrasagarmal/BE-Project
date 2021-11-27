@@ -1,4 +1,38 @@
+@import url('https://cdn.syncfusion.com/ej2/material.css');
+
 .home-bg {
-   background-image: url('bg-image.jpg');
-   margin-top: -76px;
+   height: 500px;
+   background-color: black;
+}
+
+@-webkit-keyframes fadeLeft {
+   from {
+      opacity: 0;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+   }
+   to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+   }
+}
+
+@keyframes fadeLeft {
+   from {
+      opacity: 0;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+   }
+   to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+   }
+}
+
+.fadeLeft {
+   -webkit-animation-name: fadeLeft;
+   animation-name: fadeLeft;
+   visibility: hidden;
 }
