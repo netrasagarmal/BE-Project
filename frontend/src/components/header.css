@@ -1,6 +1,5 @@
 .active {
-   background-color: #111827;
-   color: #ffffff;
+   border-bottom: solid white;
 }
 
 .homebg {
