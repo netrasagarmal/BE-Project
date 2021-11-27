@@ -26,7 +26,7 @@ SECRET_KEY = '6wok2mnj)w@)m!6--q8hj*u&$*cx8m+l0u8n_83029u#be^c*x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'DBServices',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build')
+            #os.path.join(BASE_DIR, 'frontend/build')
+            os.path.join(BASE_DIR, 'Templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,5 +129,6 @@ STATIC_URL = '/static/'
 
 # to specify django where you will find all the static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static')
+    #os.path.join(BASE_DIR, 'frontend/build/static')
+    #os.path.join(BASE_DIR, 'frontend/build/static')
 ]
