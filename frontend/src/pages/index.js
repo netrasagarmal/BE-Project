@@ -1,5 +1,6 @@
-export {default as Home} from "./Home"
-export {default as PlanTrip} from "./PlanTrip"
-export {default as Discover} from "./Discover"
-export {default as Login} from "./Login"
-export {default as Signup} from "./Signup"
+export { Navbar } from './Navbar';
+export { Banner} from "./Banner";
+export { BannerCarousel } from "./BannerCarousel";
+export { TravelCard } from "./TravelCard";
+export { Solo, Friends, Family } from "./QuestionTCard";
+export { Category } from "./Category";
