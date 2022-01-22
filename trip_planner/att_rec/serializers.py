@@ -31,15 +31,15 @@ from .models import *
 class AttractionReccSerializer(serializers.Serializer):
     uName = serializers.CharField(max_length=50)
 
-    '''destinationCity = serializers.CharField(max_length=30)
+    destinationCity = serializers.CharField(max_length=30)
     startCity = serializers.CharField(max_length=30)
     returnCity = serializers.CharField(max_length=30)
 
     minBudget = serializers.IntegerField()
     maxBudget = serializers.IntegerField()
 
-    startDate = serializers.DateField()
-    endDate = serializers.DateField()
+    #startDate = serializers.DateField()
+    #endDate = serializers.DateField()
     noOfDays = serializers.IntegerField()
 
     category1 = serializers.CharField(max_length=30)
@@ -55,9 +55,11 @@ class AttractionReccSerializer(serializers.Serializer):
     cat4Rating = serializers.IntegerField()
 
     category5 = serializers.CharField(max_length=30)
-    cat5Rating = serializers.IntegerField()'''
+    cat5Rating = serializers.IntegerField()
 
 class sampleSerializer(serializers.Serializer):
-    userName = serializers.CharField(max_length = 100)
-    age = serializers.CharField(max_length = 100)
+    username = serializers.CharField(max_length = 100)
+    name = serializers.CharField(max_length = 100)
+    email = serializers.CharField(max_length = 100)
+    #age = serializers.CharField(max_length = 100)
     

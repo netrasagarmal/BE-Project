@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -43,6 +44,11 @@ INSTALLED_APPS = [
     'DBServices',
     'att_rec',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' : [   'rest_framework.permissions.AllowAny' ],
+    
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -61,7 +67,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build')
+            #os.path.join(BASE_DIR, 'frontend/build')
             #os.path.join(BASE_DIR, 'Templates')
         ],
         'APP_DIRS': True,
@@ -130,7 +136,7 @@ STATIC_URL = '/static/'
 
 # to specify django where you will find all the static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static')
+    #os.path.join(BASE_DIR, 'frontend/build/static')
     #os.path.join(BASE_DIR, 'frontend/build/static')
 ]
 
