@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -41,7 +42,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'DBServices',
+    'att_rec',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' : [   'rest_framework.permissions.AllowAny' ],
+    
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -61,7 +68,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             #os.path.join(BASE_DIR, 'frontend/build')
-            os.path.join(BASE_DIR, 'Templates')
+            #os.path.join(BASE_DIR, 'Templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -131,4 +138,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     #os.path.join(BASE_DIR, 'frontend/build/static')
     #os.path.join(BASE_DIR, 'frontend/build/static')
+]
+
+CORS_ORIGIN_WHITELIST = [
+
+    "http://localhost:3000",
+
 ]

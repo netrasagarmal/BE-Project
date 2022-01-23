@@ -1,68 +1,13 @@
 import './pagebg.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+//import React, { useState } from 'react';
 
-export default function Home() {
-   const [details, setDetails] = useState();
-   const [username, setUsername] = useState('');
-   const [quote, setQuote] = useState('');
-   const [name, setName] = useState('');
-   const [email, setEmail] = useState('');
-
-   const getData = async () => {
-      try {
-         const response = await axios.get('http://localhost:8000/sample/');
-         setDetails(response.data.data);
-      } catch (err) {
-         console.log(err);
-      }
-   };
-
-   const postData = async () => {
-      try {
-         const response = await axios.post('http://localhost:8000/sample/', {
-            username: this.state.username,
-            name: this.state.name,
-            email: this.state.email
-         });
-         setUsername(response.data.username);
-         setName(response.data.name);
-         setEmail(response.data.email);
-      } catch (err) {
-         console.log(err);
-      }
-   };
-
-   const handleInput = (e) => {
-      setName(e.target.value);
-   };
-
-   const handleSubmit = (e) => {
-      postData();
-   };
-
-   useEffect(() => {
-      getData();
-   }, []);
-
+/*export default function Home() {
    return (
-      <div>
-         <h1 className="font-bold text-xl">Home</h1>
-
-         <form>
-            <div>
-               <p>UserName</p>
-               <input type="text" onChange={handleInput} value={username} />
-            </div>
-
-            <div>
-               <p>Name</p>
-               <input type="text" />
-            </div>
-         </form>
+      <div className="home-bg h-full bg-center bg-no-repeat bg-cover">
+         <h1 className="pt-96">Home</h1>
       </div>
    );
-}
+}*/
 
 /*import React from "react";
 //import './App.css';
@@ -239,137 +184,145 @@ class Home extends React.Component {
 }
 export default Home;*/
 
-// class Home extends React.Component {
-// 	state = {
-// 		details: [],
-// 		user: "",
-// 		quote: "",
-// 	};
+import React from "react";
+import axios from "axios";
 
-// 	componentDidMount() {
-// 		let data;
+class Home extends React.Component {
+	state = {
+		details: [],
+		username: "",
+		name: "",
+		email: "",
+	};
 
-// 		axios
-// 			.get("http://localhost:8000/sample/")
-// 			.then((res) => {
-// 				data = res.data;
-// 				this.setState({
-// 					details: data,
-// 				});
-// 			})
-// 			.catch((err) => {});
-// 	}
+	componentDidMount() {
+		let data;
 
-// 	handleInput = (e) => {
-// 		this.setState({
-// 			[e.target.name]: e.target.value,
-// 		});
-// 	};
+		axios
+			.get("http://localhost:8000/sample/")
+			.then((res) => {
+				data = res.data;
+				this.setState({
+					details: data,
+				});
+			})
+			.catch((err) => {});
+	}
 
-// 	handleSubmit = (e) => {
-// 		e.preventDefault();
 
-// 		axios
-// 			.post("http://localhost:8000/sample/", {
-// 				username: this.state.username,
-// 				name: this.state.name,
-// 				email: this.state.email,
-// 			})
-// 			.then((res) => {
-// 				this.setState({
-// 					username: "",
-// 					name: "",
-// 					email: "",
-// 				});
-// 			})
-// 			.catch((err) => {});
-// 	};
+	handleInput = (e) => {
+		this.setState({
+			[e.target.name]: e.target.value,
+		});
+	};
 
-// 	render() {
-// 		return (
-// 			<div className="container jumbotron ">
-// 				<form onSubmit={this.handleSubmit}>
+	handleSubmit = (e) => {
+		e.preventDefault();
 
-// 					<div className="input-group mb-3">
-// 						<div className="input-group-prepend">
-// 							<span className="input-group-text"
-// 								id="basic-addon1">
-// 								{" "}
-// 								Username{" "}
-// 							</span>
-// 						</div>
-// 						<input type="text" className="form-control"
-// 							placeholder="Name of the Poet/Author"
-// 							aria-label="Username"
-// 							aria-describedby="basic-addon1"
-// 							value={this.state.username} name="username"
-// 							onChange={this.handleInput} />
-// 					</div>
+		axios
+			.post("http://localhost:8000/sample/", {
+				username: this.state.username,
+				name: this.state.name,
+				email: this.state.email,
+			})
+			.then((res) => {
+				this.setState({
+					username: "",
+					name: "",
+					email: "",
+				});
+			})
+			.catch((err) => {});
+	};
 
-// 					<div className="input-group mb-3">
-// 						<div className="input-group-prepend">
-// 							<span className="input-group-text">
-// 							Name
-// 							</span>
-// 						</div>
-// 						<textarea className="form-control "
-// 								aria-label="With textarea"
-// 								placeholder="Name of person"
-// 								value={this.state.name} name="name"
-// 								onChange={this.handleInput}>
-// 						</textarea>
-// 					</div>
+	render() {
+		return (
+			<div className="container jumbotron ">
+				<form onSubmit={this.handleSubmit}>
 
-// 					<div className="input-group mb-3">
-// 						<div className="input-group-prepend">
-// 							<span className="input-group-text"
-// 								id="basic-addon1">
-// 								{" "}
-// 								Email{" "}
-// 							</span>
-// 						</div>
-// 						<input type="text" className="form-control"
-// 							placeholder="Email of person"
-// 							aria-label="Email"
-// 							aria-describedby="basic-addon1"
-// 							value={this.state.email} name="email"
-// 							onChange={this.handleInput} />
-// 					</div>
+					<div className="input-group mb-3">
+						<div className="input-group-prepend">
+							<span className="input-group-text"
+								id="basic-addon1">
+								{" "}
+								Username{" "}
+							</span>
+						</div>
+						<input type="text" className="form-control"
+							placeholder="Name of the Poet/Author"
+							aria-label="Username"
+							aria-describedby="basic-addon1"
+							value={this.state.username} name="username"
+							onChange={this.handleInput} />
+					</div>
 
-// 					<button type="submit" className="btn btn-primary mb-5">
-// 						Submit
-// 					</button>
-// 				</form>
+					<div className="input-group mb-3">
+						<div className="input-group-prepend">
+							<span className="input-group-text">
+							Name
+							</span>
+						</div>
+						<textarea className="form-control "
+								aria-label="With textarea"
+								placeholder="Name of person"
+								value={this.state.name} name="name"
+								onChange={this.handleInput}>
+						</textarea>
+					</div>
 
-// 				<hr
-// 					style={{
-// 						color: "#000000",
-// 						backgroundColor: "#000000",
-// 						height: 0.5,
-// 						borderColor: "#000000",
-// 					}}
-// 				/>
+					<div className="input-group mb-3">
+						<div className="input-group-prepend">
+							<span className="input-group-text"
+								id="basic-addon1">
+								{" "}
+								Email{" "}
+							</span>
+						</div>
+						<input type="text" className="form-control"
+							placeholder="Email of person"
+							aria-label="Email"
+							aria-describedby="basic-addon1"
+							value={this.state.email} name="email"
+							onChange={this.handleInput} />
+					</div>
 
-// 				{this.state.details.map((detail, id) => (
-// 					<div key={id}>
-// 						<div className="card shadow-lg">
-// 							<div >Quote {id + 1}</div>
-// 								<div className="card-body">
-// 									<blockquote>
-// 										<h1> {detail.username} </h1>
-// 										<footer className="blockquote-footer">
-// 											{" "}
-// 											<cite title="Source Title">{detail.name}</cite><br></br>
-// 											<cite title="Source Title">{detail.email}</cite>
-// 										</footer>
-// 									</blockquote>
-// 								</div>
-// 						</div>
-// 						<span className="border border-primary "></span>
-// 					</div>
-// 				))}
-// 			</div>
-// 		);
-// 	}
-// }
-// export default Home;
+
+
+					<button type="submit" className="btn btn-primary mb-5">
+						Submit
+					</button>
+				</form>
+
+				<hr
+					style={{
+						color: "#000000",
+						backgroundColor: "#000000",
+						height: 0.5,
+						borderColor: "#000000",
+					}}
+				/>
+
+				{this.state.details.map((detail, id) => (
+					<div key={id}>
+						<div className="card shadow-lg">
+							<div >Quote {id + 1}</div>
+								<div className="card-body">
+									<blockquote>
+										<h1> {detail.username} </h1>
+										<footer className="blockquote-footer">
+											{" "}
+											<cite title="Source Title">{detail.name}</cite><br></br>
+											<cite title="Source Title">{detail.email}</cite>
+										</footer>
+									</blockquote>
+								</div>
+						</div>
+						<span className="border border-primary "></span>
+					</div>
+				))}
+			</div>
+		);
+	}
+}
+export default Home;
+
