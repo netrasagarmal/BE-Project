@@ -69,6 +69,42 @@ class Sample(APIView):
             }
         
         ]
+        '''data1 = {
+            "items":[  
+                {  
+                    "username":"Sagar",
+                    "name":"Sagar Patil",
+                    "email":"abc@gmail.com"
+                    
+                },
+                {  
+                    "username":"Netraj",
+                    "name":"Netraj Patil",
+                    "email":"xyz@gmail.com"
+                    
+                }
+                
+            ]
+        }'''
+        '''
+        data1 = {
+            "items":[  
+                {  
+                    "username":"Sagar",
+                    "name":"Sagar Patil",
+                    "email":"abc@gmail.com"
+                    
+                },
+                {  
+                    "username":"Sagar",
+                    "name":"Sagar Patil",
+                    "email":"abc@gmail.com"
+                    
+                }
+                
+            ]
+        }
+        '''
         
         # Serializing json
 
