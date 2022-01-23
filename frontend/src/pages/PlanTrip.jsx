@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import axios from 'axios';
 import './pagebg.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { BannerCarousel, Solo, Friends, Family } from '../components';
+import { BannerCarousel, Solo, Friends, Family, Category } from '../components';
+import Slider from '@mui/material/Slider';
 import group from '../images/Travel Card/group.png';
 import Couple from '../images/Travel Card/couple.png';
 import FamilyPic from '../images/Travel Card/familypic.png';
@@ -29,8 +31,111 @@ export default function PlanTrip() {
    //----------------------Store select Date---------------------------
    const [dateRange, setDateRange] = useState([null, null]);
    const [startDate, endDate] = dateRange;
-
    const [tripStatus, setTripStatus] = useState(null);
+   const [value, setValue] = useState([20, 37]);
+   const [selection, setselection] = useState([]);
+   const [startCity, setStartCity] = useState('');
+   const [endCity, setEndCity] = useState('');
+   const [destination, setDestination] = useState('');
+
+   const handleChange = (event, newValue) => {
+      setValue(newValue);
+   };
+
+   const isListSelected = (cardID) => selection.includes(cardID);
+
+   const handleSelection = (cardID) => {
+      if (isListSelected(cardID)) {
+         const updateSelectedList = selection.filter((list) => list !== cardID);
+         setselection(updateSelectedList);
+      } else {
+         setselection((prevLists) => [...prevLists, cardID]);
+      }
+   };
+
+   function valuetext(value) {
+      return `${value}°C`;
+   }
+
+   const postData = async () => {
+      const data = {
+         startCity: startCity,
+         endCity: endCity,
+         destination: destination
+      };
+      try {
+         const response = await axios.post(
+            'http://localhost:8000/sample/',
+            data
+         );
+         console.log(response);
+      } catch (err) {
+         console.log(err);
+      }
+   };
+
+   const categories = [
+      {
+         id: 1,
+         value: 'Private & Custom Tours'
+      },
+      {
+         id: 2,
+         value: 'Food, Wine & Nightlife'
+      },
+      {
+         id: 3,
+         value: 'Day Trips & Excursions'
+      },
+      {
+         id: 4,
+         value: 'Luxury & Special Occasions'
+      },
+      {
+         id: 5,
+         value: 'Air, Helicopter & Balloon Tour'
+      },
+      {
+         id: 6,
+         value: 'Tours & Sightseeing'
+      },
+      {
+         id: 7,
+         value: 'Family Friendly'
+      },
+      {
+         id: 8,
+         value: 'Water Sports'
+      },
+      {
+         id: 9,
+         value: 'Sightseeing Tickets & Passes'
+      },
+      {
+         id: 10,
+         value: 'Holiday & Seasonal Tours'
+      },
+      {
+         id: 11,
+         value: 'Recommended Experiences'
+      },
+      {
+         id: 12,
+         value: 'Cultural & Theme Tours'
+      },
+      {
+         id: 13,
+         value: 'Cruises, Sailing & Water Tours'
+      },
+      {
+         id: 14,
+         value: 'Multi-day & Extended Tours'
+      },
+      {
+         id: 15,
+         value: 'Shows, Concerts & Sports'
+      }
+   ];
 
    // const [tCard, setTCard] = useState([
    //    { id: 1, type: 'Solo', url: Solo },
@@ -64,41 +169,46 @@ export default function PlanTrip() {
                   <div>
                      <form className="p-3">
                         <div className=" mt-1.5">
-                           <p className="font-medium text-sm">
+                           <p className="font-medium text-base">
                               Where do you want to go?
                            </p>
                            <input
                               name="whereDoUWanaGo"
                               type="text"
                               placeholder="Where do you want to go?"
+                              onChange={(e) => setDestination(e.target.value)}
                               className="border border-gray-400 border-dashed rounded p-2 w-full m-1.5 focus:border-black outline-none"
                            />
                         </div>
 
                         <div className="flex justify-between mt-1.5">
                            <div className="w-1/2 mt-1.5 mr-4">
-                              <p className="font-medium text-sm">Start City</p>
+                              <p className="font-medium text-base">
+                                 Start City
+                              </p>
                               <input
                                  name="startCity"
                                  type="text"
                                  placeholder="Start City"
+                                 onChange={(e) => setStartCity(e.target.value)}
                                  className="border border-gray-400 border-dashed w-full rounded p-2 mx-2 focus:border-black outline-none mt-1.5"
                               />
                            </div>
 
                            <div className="w-1/2 mt-1.5">
-                              <p className="font-medium text-sm">End City</p>
+                              <p className="font-medium text-base">End City</p>
                               <input
                                  type="text"
                                  name="endCity"
                                  placeholder="End City"
+                                 onChange={(e) => setEndCity(e.target.value)}
                                  className="border border-gray-400 border-dashed w-full rounded p-2 focus:border-black outline-none mt-1.5"
                               />
                            </div>
                         </div>
 
                         <div className="w-auto mt-1.5">
-                           <p className="font-medium text-sm">Select Date</p>
+                           <p className="font-medium text-base">Select Date</p>
                            <DatePicker
                               className="border border-gray-400 border-dashed rounded w-full p-2 mx-1.5 focus:border-black border-dashed outline-none mt-1.5"
                               selectsRange={true}
@@ -111,12 +221,46 @@ export default function PlanTrip() {
                            />
                         </div>
 
+                        <div className="w-auto mt-1.5 flex flex-col justify-between">
+                           <p className="font-medium text-base">Budget</p>
+                           <div className="px-6 mt-1.5">
+                              <Slider
+                                 getAriaLabel={() => 'Price range'}
+                                 value={value}
+                                 onChange={handleChange}
+                                 valueLabelDisplay="auto"
+                                 min={0}
+                                 max={10000}
+                                 getAriaValueText={valuetext}
+                              />
+                           </div>
+                        </div>
+
                         <div className="my-2 py-2">
-                           <p className="font-medium text-sm">
-                              Who are you travelling with?
+                           <p className="font-medium text-base">
+                              Select At-least 5 Categories
                            </p>
 
-                           <div className="flex items-center justify-center mt-1.5">
+                           <div className="grid grid-cols-5 p-4">
+                              {categories.map((item, index) => (
+                                 <div
+                                    key={item.id}
+                                    onClick={() => handleSelection(item.id)}
+                                 >
+                                    <Category
+                                       key={`${item.value}-${index}`}
+                                       value={item.value}
+                                       selected={isListSelected(item.id)}
+                                    />
+                                 </div>
+                              ))}
+                           </div>
+
+                           {/* <p className="font-medium text-sm">
+                              Who are you travelling with?
+                           </p> */}
+
+                           {/* <div className="flex items-center justify-center mt-1.5">
                               <div
                                  onClick={() => setTripStatus('SOLO')}
                                  className="rounded-lg h-28 active:border active:border-solid active:border-blue-300 border bg-gray-200  m-1.5 p-1.5 w-full overflow-hidden shadow-md flex flex-col justify-center items-center"
@@ -173,7 +317,7 @@ export default function PlanTrip() {
                                     Traveling with Friends
                                  </p>
                               </div>
-                           </div>
+                           </div> */}
 
                            {/* <TravelCard tCard={tCard} tCardHandler={tCardHandler} /> */}
                         </div>
@@ -184,7 +328,7 @@ export default function PlanTrip() {
                   {tripStatus === 'FAMILY' && <Family />}
                   <div className="flex justify-center p-3">
                      <button
-                        type="submit"
+                        onClick={() => postData()}
                         className="rounded shadow-md bg-gray-300 p-2 w-min"
                      >
                         Submit
@@ -196,4 +340,3 @@ export default function PlanTrip() {
       </>
    );
 }
-

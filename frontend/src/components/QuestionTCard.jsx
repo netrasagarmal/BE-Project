@@ -114,15 +114,9 @@ export const Family = () => {
                <p>(16 + years)</p>
             </div>
             <div className="flex justify-center items-center px-2">
-               <i
-                  className="bx bx-minus-circle text-3xl"
-                  onClick={decrementAdult}
-               ></i>
+               <i className="bx bx-minus-circle" onClick={decrementAdult}></i>
                <p className="px-2.5">{counterAdult}</p>
-               <i
-                  className="bx bx-plus-circle text-3xl"
-                  onClick={incrementAdult}
-               ></i>
+               <i className="bx bx-plus-circle" onClick={incrementAdult}></i>
             </div>
          </div>
 
@@ -133,10 +127,7 @@ export const Family = () => {
                <p>(0-16 years)</p>
             </div>
             <div className="flex justify-center items-center px-2">
-               <i
-                  className="bx bx-minus-circle text-3xl"
-                  onClick={decrementKid}
-               ></i>
+               <i className="bx bx-minus-circle " onClick={decrementKid}></i>
                <p className="px-2.5">{counterKid}</p>
                <i
                   className="bx bx-plus-circle text-3xl"
