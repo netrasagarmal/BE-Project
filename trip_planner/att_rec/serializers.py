@@ -38,23 +38,24 @@ class AttractionReccSerializer(serializers.Serializer):
     minBudget = serializers.IntegerField()
     maxBudget = serializers.IntegerField()
 
-    #startDate = serializers.DateField()
-    #endDate = serializers.DateField()
+    startDate = serializers.DateField()
+    endDate = serializers.DateField()
+    
     noOfDays = serializers.IntegerField()
 
-    category1 = serializers.CharField(max_length=30)
+    category1 = serializers.CharField(max_length=50)
     cat1Rating = serializers.IntegerField()
 
-    category2 = serializers.CharField(max_length=30)
+    category2 = serializers.CharField(max_length=50)
     cat2Rating = serializers.IntegerField()
 
-    category3 = serializers.CharField(max_length=30)
+    category3 = serializers.CharField(max_length=50)
     cat3Rating = serializers.IntegerField()
 
-    category4 = serializers.CharField(max_length=30)
+    category4 = serializers.CharField(max_length=50)
     cat4Rating = serializers.IntegerField()
 
-    category5 = serializers.CharField(max_length=30)
+    category5 = serializers.CharField(max_length=50)
     cat5Rating = serializers.IntegerField()
 
 class sampleSerializer(serializers.Serializer):
