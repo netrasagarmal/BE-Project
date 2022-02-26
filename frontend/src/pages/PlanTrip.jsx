@@ -1,20 +1,3 @@
-/**
- * category1: selection[0].value.toLowerCase().split(' ').join('_'),
-         cat1Rating: 5,
-
-         category2: selection[1].value.toLowerCase().split(' ').join('_'),
-         cat2Rating: 4,
-
-         category3: selection[2].value.toLowerCase().split(' ').join('_'),
-         cat3Rating: 3,
-
-         category4: selection[3].value.toLowerCase().split(' ').join('_'),
-         cat4Rating: 2,
-
-         category5: selection[4].value.toLowerCase().split(' ').join('_'),
- * 
- * 
- */
 import { useState } from 'react';
 import axios from 'axios';
 import './pagebg.css';
@@ -31,10 +14,11 @@ import {
 } from '../components';
 import Slider from '@mui/material/Slider';
 import format from 'date-fns/format';
-import group from '../images/Travel Card/group.png';
-import Couple from '../images/Travel Card/couple.png';
-import FamilyPic from '../images/Travel Card/familypic.png';
-import soloPerson from '../images/Travel Card/soloPerson.png';
+import { useNavigate } from 'react-router-dom';
+// import group from '../images/Travel Card/group.png';
+// import Couple from '../images/Travel Card/couple.png';
+// import FamilyPic from '../images/Travel Card/familypic.png';
+// import soloPerson from '../images/Travel Card/soloPerson.png';
 
 const categories = [
    {
@@ -140,15 +124,16 @@ export default function PlanTrip() {
    const [dateRange, setDateRange] = useState([null, null]);
    const [startDate, endDate] = dateRange;
    const [tripStatus, setTripStatus] = useState(null);
-   const [value, setValue] = useState([0, 2000]);
+   const [budgetValue, setBudgetValue] = useState([0, 2000]);
    const [selection, setSelection] = useState([]);
    const [startCity, setStartCity] = useState('');
    const [returnCity, setreturnCity] = useState('');
    const [destinationCity, setDestinationCity] = useState('');
-   const [rating, setRating] = useState([]);
+   // const [rating, setRating] = useState([]);
+   const navigate = useNavigate();
 
    const handleChange = (event, newValue) => {
-      setValue(newValue);
+      setBudgetValue(newValue);
    };
 
    const isListSelected = (itemID) =>
@@ -165,8 +150,6 @@ export default function PlanTrip() {
       }
    };
 
-   console.log(rating);
-
    function valuetext(value) {
       return `${value}°C`;
    }
@@ -179,13 +162,12 @@ export default function PlanTrip() {
          startCity: startCity,
          returnCity: returnCity,
 
-         minBudget: 0,
-         maxBudget: 1000,
+         minBudget: budgetValue[0],
+         maxBudget: budgetValue[1],
 
          startDate: format(startDate, 'yyyy-MM-dd'),
          endDate: format(endDate, 'yyyy-MM-dd'),
-         
-         noOfDays:format(endDate - startDate, 'dd'),
+         noOfDays: format(endDate - startDate, 'dd'),
 
          category1: selection[0].value.toLowerCase().split(' ').join('_'),
          cat1Rating: 5,
@@ -202,18 +184,48 @@ export default function PlanTrip() {
          category5: selection[4].value.toLowerCase().split(' ').join('_'),
          cat5Rating: 1
       };
-      axios
-         .post('http://127.0.0.1:8000/attrec/', data)
-         .then((response) => {
-            console.log('Status: ', response.status);
-            console.log(format(endDate - startDate, 'dd'));
-            console.log('Data: ', response.data);
-         })
-         .catch((error) => {
-            console.error('Something went wrong!', error);
-         });
+      try {
+         const response = await axios.post(
+            'http://127.0.0.1:8000/attrec/',
+            data
+         );
+         if (response.data) {
+            navigate('/result');
+         }
+      } catch (error) {
+         console.log(error);
+      }
+
+      // axios
+      //    .post('http://127.0.0.1:8000/attrec/', data)
+      //    .then((response) => {
+      //       backendData = response.data;
+      //       console.log(backendData);
+      //       console.log('Status: ', response.status);
+      //       console.log('Data: ', response.data);
+      //    })
+      //    .catch((error) => {
+      //       console.error('Something went wrong!', error);
+      //    });
    };
 
+   // const [tCard, setTCard] = useState([
+   //    { id: 1, type: 'Solo', url: Solo },
+   //    { id: 2, type: 'Couple', url: Couple },
+   //    { id: 3, type: 'Family', url: Family },
+   //    { id: 4, type: 'Friends', url: Friends }
+   // ]);
+
+   // const tCardHandler = (id, isVisible) => {
+   //    setTCard((prevTCard) => [
+   //       ...prevTCard.map((tCard) => {
+   //          if (tCard.id === id) {
+   //             tCard.isVisible = !isVisible;
+   //          }
+   //          return tCard;
+   //       })
+   //    ]);
+   // };
 
    return (
       <>
@@ -224,7 +236,7 @@ export default function PlanTrip() {
             </div>
 
             {/* //--------------------------PlanTrip div------------------------ */}
-            <div className="m-1 border-solid outline-none rounded p-3">
+            <div className="border-solid outline-none rounded p-3">
                <div className="max-h-screen">
                   <div>
                      <form className="p-3">
@@ -243,7 +255,7 @@ export default function PlanTrip() {
                            />
                         </div>
 
-                        <div className="flex justify-between mt-1.5">
+                        <div className="flex mt-1.5">
                            <div className="w-1/2 mt-1.5 mr-4">
                               <p className="font-medium text-base">
                                  Start City
@@ -264,7 +276,7 @@ export default function PlanTrip() {
                                  name="returnCity"
                                  placeholder="End City"
                                  onChange={(e) => setreturnCity(e.target.value)}
-                                 className="border border-gray-400 border-dashed w-full rounded p-2 focus:border-black outline-none mt-1.5"
+                                 className="border border-gray-400 border-dashed w-full rounded p-2 mx-2 focus:border-black outline-none mt-1.5"
                               />
                            </div>
                         </div>
@@ -285,13 +297,13 @@ export default function PlanTrip() {
 
                         <div className="w-auto mt-1.5 flex flex-col justify-between">
                            <p className="font-medium text-base">Budget</p>
-                           <div className="px-6 mt-1.5">
+                           <div className="px-6 mt-8">
                               <Slider
                                  getAriaLabel={() => 'Price range'}
-                                 value={value}
+                                 value={budgetValue}
                                  onChange={handleChange}
                                  min={0}
-                                 valueLabelDisplay="auto"
+                                 valueLabelDisplay="on"
                                  max={10000}
                                  getAriaValueText={valuetext}
                               />
