@@ -1,5 +1,5 @@
 export const Category = ({ value, selected }) => {
-   console.log(selected);
+   // console.log('here', selected);
    return (
       <div
          className={`${

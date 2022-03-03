@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RecommendCard } from '../components';
 
 export default function Result() {
@@ -7,6 +8,7 @@ export default function Result() {
 
    const [backendData, setBackendData] = useState([]);
    // console.log('save hot ahe ka', backData);
+   const navigate = useNavigate();
 
    const getData = async () => {
       try {
@@ -17,7 +19,7 @@ export default function Result() {
          // console.log('respo', backData.name[0]);
          // backendData = backData;
          // console.log('parse', backData);
-         console.log('respo in result', response.data);
+         console.log('respo', response.data);
          setBackendData(response.data);
          // backData = response.data;
       } catch (error) {
@@ -44,6 +46,20 @@ export default function Result() {
                   );
                })}
          </section>
+         <div className="flex justify-center align items-center space-x-5 my-4">
+            <button
+               onClick={() => navigate('/plantrip')}
+               className="w-20 bg-gray-300 p-2 rounded items-center justify-center hover:bg-gray-900 hover:text-white"
+            >
+               Back
+            </button>
+            <button
+               onClick={() => navigate('/resultMap')}
+               className="w-20 bg-gray-300 p-2 rounded items-center justify-center hover:bg-gray-900 hover:text-white"
+            >
+               Next
+            </button>
+         </div>
       </div>
    );
 }

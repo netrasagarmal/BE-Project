@@ -5,6 +5,17 @@
    background-color: black;
 }
 
+.backgroundImage {
+   background-image: url('https://picsum.photos/1400/1050?random=1');
+   height: 100vh;
+   background-size: cover;
+   overflow: hidden;
+}
+
+.topology {
+   background-image: url('https://firebasestorage.googleapis.com/v0/b/trip-planner-9213c.appspot.com/o/Background%20Img%2F2761381.jpg?alt=media&token=7ec5727c-c1f5-471b-bd0b-8b1ec6123463');
+}
+
 @-webkit-keyframes fadeLeft {
    from {
       opacity: 0;
@@ -36,3 +47,5 @@
    animation-name: fadeLeft;
    visibility: hidden;
 }
+
+/* ----------------------------------------------- */

@@ -24,9 +24,8 @@ const marks = [
 ];
 
 export const Rating = ({ value }) => {
-   console.log('rating: ', value);
    return (
-      <div className="w-2/4 border-2 px-4 rounded m-2 border-gray-300 border-dashed">
+      <div className=" border-2 px-4 rounded m-2 border-gray-300 border-dashed">
          <p className="">{value}</p>
          <Slider
             className=""

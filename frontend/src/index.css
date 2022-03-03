@@ -22,3 +22,125 @@ body {
 ::-webkit-scrollbar-thumb:hover {
    background: #555;
 }
+
+.backgroundHome {
+   background-image: url('https://firebasestorage.googleapis.com/v0/b/trip-planner-9213c.appspot.com/o/Background%20Img%2F2761381.jpg?alt=media&token=7ec5727c-c1f5-471b-bd0b-8b1ec6123463');
+
+   background-size: cover;
+   overflow: hidden;
+}
+
+.dropbtn {
+   padding: 16px;
+   font-size: 16px;
+   border: none;
+}
+
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+
+.dropdown-content {
+   display: none;
+   position: absolute;
+   right: 0;
+   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+   z-index: 1;
+}
+
+.dropdown-content a {
+   color: black;
+   text-decoration: none;
+   display: block;
+}
+
+.dropdown-content a:hover {
+   background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+   display: block;
+}
+
+.dropdown:hover .dropbtn {
+   transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------- */
+
+.timepass:hover {
+   animation: mymove 5s;
+}
+
+@keyframes mymove {
+   50% {
+      transform: rotate(180deg);
+   }
+}
+
+/* ------------------------------------------------------------- */
+
+.banner-wrapper {
+   height: 450px;
+}
+
+.banner-dot {
+   position: absolute;
+   bottom: 0;
+   margin-left: 0.5rem;
+   /* display: flex; */
+   /* align-items: center; */
+}
+.banner-dot > button {
+   width: 12px;
+   height: 12px;
+   border-radius: 50%;
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   background-color: var(--border);
+   margin-right: 1rem;
+   cursor: pointer;
+   border: none;
+}
+.banner-dot > button:disabled {
+   background-color: var(--black-color);
+   outline: 1px solid var(--border);
+   outline-offset: 3px;
+}
+.banner-dot > button:hover {
+   outline: 1px solid var(--border);
+   outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------- */
+.line-1 {
+   position: relative;
+   margin: 0 auto;
+   border-right: 2px solid rgba(255, 255, 255, 0.75);
+   text-align: center;
+   white-space: nowrap;
+   overflow: hidden;
+}
+
+/* Animation */
+.anim-typewriter {
+   animation: typewriter 4s steps(44) 1s 1 normal both,
+      blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+   from {
+      width: 0;
+   }
+   to {
+      width: 16em;
+   }
+}
+@keyframes blinkTextCursor {
+   from {
+      border-right-color: rgba(255, 255, 255, 0.75);
+   }
+   to {
+      border-right-color: transparent;
+   }
+}

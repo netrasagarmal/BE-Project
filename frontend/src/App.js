@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Signup, Login, PlanTrip, Discover, Result } from "./pages";
-import { Navbar } from "./components";
+import { Home, Signup, Login, PlanTrip, Discover, Result, ResultMap, Account } from "./pages";
+import { Navbar, ProtectedRoute } from "./components";
 
 function App() {
 	return (
@@ -14,6 +14,14 @@ function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/result" element={<Result />} />
+				<Route path="/resultMap" element={<ResultMap />} />
+					<Route path="/account" 
+						element={
+							<ProtectedRoute>
+								<Account />
+							</ProtectedRoute>
+						}
+					/>
 			</Routes>
 			{/* </div> */}
 
