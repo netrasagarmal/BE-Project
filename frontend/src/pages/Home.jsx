@@ -1,328 +1,107 @@
 import './pagebg.css';
-//import React, { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { db } from '../firebase-config';
+import { BannerCarousel, PopularDesCard, Footer } from '../components';
+import { useEffect } from 'react';
 
-/*export default function Home() {
+export default function Home() {
+   const [bannerData, setBannerData] = useState();
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      (async () => {
+         try {
+            let dataArr = [];
+            await db
+               .collection('carouselData')
+               .get()
+               .then((docs) => {
+                  docs.forEach((doc) => {
+                     // doc.data() is never undefined for query doc snapshots
+                     dataArr.push({ ...doc.data(), id: doc.id });
+                  });
+               });
+            setBannerData(dataArr);
+         } catch (err) {
+            console.log(err.message);
+         }
+      })();
+   }, []);
+
    return (
-      <div className="home-bg h-full bg-center bg-no-repeat bg-cover">
-         <h1 className="pt-96">Home</h1>
+      <div className="">
+         <div className="backgroundHome">
+            {bannerData && bannerData.length > 0 && (
+               <BannerCarousel value={bannerData} />
+            )}
+         </div>
+
+         <div className="mt-4">
+            <h1 className="line-1 font-medium text-xl anim-typewriter">
+               Easy to use, Easy to browse
+            </h1>
+
+            <div className="flex p-10">
+               <span className="text-center px-2">
+                  {' '}
+                  <i className="bx bx-world text-7xl text-blue-500 font-thintext-7xl text-blue-500 font-thin"></i>
+                  <p>
+                     <b>Select Your Destination</b> from 1M+ New & popular
+                     Tourist Attractions
+                  </p>
+               </span>
+
+               <span className="text-center px-2">
+                  {' '}
+                  <i className="bx bx-hotel text-7xl text-blue-500 font-thin"></i>
+                  <p>
+                     <b>Select Your Accommodation</b> from 1M+ Accommodations
+                     around the Globe
+                  </p>
+               </span>
+
+               <span className="text-center px-2">
+                  {' '}
+                  <i className="bx bx-dollar-circle text-7xl text-blue-500 font-thin"></i>
+                  <p>
+                     <b>Check Your Budget</b> with In-Built Trip Budget
+                     Calculator in Multiple Currencies
+                  </p>
+               </span>
+
+               <span className="text-center px-2">
+                  {' '}
+                  <i className="bx bx-calendar-check text-7xl text-blue-500 font-thin"></i>
+                  <p>
+                     <b>Finish Your Itinerary</b> with our Free online Vacation
+                     Planner in few minutes
+                  </p>
+               </span>
+            </div>
+            <section className="flex justify-center">
+               {' '}
+               <button
+                  onClick={() => navigate('/plantrip')}
+                  className="transition duration-500 ease-in-out rounded shadow-md hover:text-white hover:bg-black bg-gray-300 p-2 mb-10 w-auto"
+               >
+                  Start Planning
+               </button>
+            </section>
+         </div>
+
+         <hr className="bg-gray-400 w-full h-0.5" />
+
+         <div className="mt-4">
+            <h2 className="line-1 font-medium text-xl anim-typewriter">
+               Popular Destinations This Season
+            </h2>
+            {bannerData && bannerData.length > 0 && (
+               <PopularDesCard value={bannerData} />
+            )}
+         </div>
+
+         <Footer />
       </div>
    );
-}*/
-
-/*import React from "react";
-//import './App.css';
-class Home extends React.Component {
-
-	// Constructor
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			items: [],
-			DataisLoaded: false
-		};
-	}
-
-	// ComponentDidMount is used to
-	// execute the code
-	componentDidMount() {
-		fetch(
-            "http://127.0.0.1:8000/sample")
-			.then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json,
-                    DataisLoaded: true
-                });
-            })
-	}
-	render() {
-		const { DataisLoaded, items } = this.state;
-		if (!DataisLoaded) return <div>
-			<h1> Pleses wait some time.... </h1> </div> ;
-
-		return (
-		<div className = "Home">
-			<h1> Fetch data from an api in react </h1> {
-				items && items.length > 0 && items.map((item) => (
-				<ol >
-					User_Name: { item.username },
-					Full_Name: { item.name },
-					User_Email: { item.email }
-					</ol>
-				))
-			}
-            {console.log(items)}
-		</div>
-	);
 }
-}
-
-export default Home;
-*/
-/*
-import React from "react";
-import axios from "axios";
-
-class Home extends React.Component {
-	state = {
-		details: [],
-		user: "",
-		quote: "",
-	};
-
-	componentDidMount() {
-		let data;
-
-		axios
-			.get("http://localhost:8000/sample/")
-			.then((res) => {
-				data = res.data;
-				this.setState({
-					details: data,
-				});
-			})
-			.catch((err) => {});
-	}
-
-
-	handleInput = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	handleSubmit = (e) => {
-		e.preventDefault();
-
-		axios
-			.post("http://localhost:8000/sample/", {
-				name: this.state.user,
-				detail: this.state.quote,
-			})
-			.then((res) => {
-				this.setState({
-					username: "",
-					name: "",
-				});
-			})
-			.catch((err) => {});
-	};
-
-	render() {
-		return (
-			<div className="container jumbotron ">
-				<form onSubmit={this.handleSubmit}>
-
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text"
-								id="basic-addon1">
-								{" "}
-								Username{" "}
-							</span>
-						</div>
-						<input type="text" className="form-control"
-							placeholder="Name of the Poet/Author"
-							aria-label="Username"
-							aria-describedby="basic-addon1"
-							value={this.state.username} name="username"
-							onChange={this.handleInput} />
-					</div>
-
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text">
-							Name
-							</span>
-						</div>
-						<textarea className="form-control "
-								aria-label="With textarea"
-								placeholder="Tell us what you think of ....."
-								value={this.state.quote} name="name"
-								onChange={this.handleInput}>
-						</textarea>
-					</div>
-
-
-
-					<button type="submit" className="btn btn-primary mb-5">
-						Submit
-					</button>
-				</form>
-
-				<hr
-					style={{
-						color: "#000000",
-						backgroundColor: "#000000",
-						height: 0.5,
-						borderColor: "#000000",
-					}}
-				/>
-
-				{this.state.details.map((detail, id) => (
-					<div key={id}>
-						<div className="card shadow-lg">
-							<div >Quote {id + 1}</div>
-								<div className="card-body">
-									<blockquote>
-										<h1> {detail.username} </h1>
-										<footer className="blockquote-footer">
-											{" "}
-											<cite title="Source Title">{detail.name}</cite><br></br>
-											<cite title="Source Title">{detail.email}</cite>
-										</footer>
-									</blockquote>
-								</div>
-						</div>
-						<span className="border border-primary "></span>
-					</div>
-				))}
-			</div>
-		);
-	}
-}
-export default Home;*/
-
-import React from "react";
-import axios from "axios";
-
-class Home extends React.Component {
-	state = {
-		details: [],
-		username: "",
-		name: "",
-		email: "",
-	};
-
-	componentDidMount() {
-		let data;
-
-		axios
-			.get("http://localhost:8000/sample/")
-			.then((res) => {
-				data = res.data;
-				this.setState({
-					details: data,
-				});
-			})
-			.catch((err) => {});
-	}
-
-
-	handleInput = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	handleSubmit = (e) => {
-		e.preventDefault();
-
-		axios
-			.post("http://localhost:8000/sample/", {
-				username: this.state.username,
-				name: this.state.name,
-				email: this.state.email,
-			})
-			.then((res) => {
-				this.setState({
-					username: "",
-					name: "",
-					email: "",
-				});
-			})
-			.catch((err) => {});
-	};
-
-	render() {
-		return (
-			<div className="container jumbotron ">
-				<form onSubmit={this.handleSubmit}>
-
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text"
-								id="basic-addon1">
-								{" "}
-								Username{" "}
-							</span>
-						</div>
-						<input type="text" className="form-control"
-							placeholder="Name of the Poet/Author"
-							aria-label="Username"
-							aria-describedby="basic-addon1"
-							value={this.state.username} name="username"
-							onChange={this.handleInput} />
-					</div>
-
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text">
-							Name
-							</span>
-						</div>
-						<textarea className="form-control "
-								aria-label="With textarea"
-								placeholder="Name of person"
-								value={this.state.name} name="name"
-								onChange={this.handleInput}>
-						</textarea>
-					</div>
-
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text"
-								id="basic-addon1">
-								{" "}
-								Email{" "}
-							</span>
-						</div>
-						<input type="text" className="form-control"
-							placeholder="Email of person"
-							aria-label="Email"
-							aria-describedby="basic-addon1"
-							value={this.state.email} name="email"
-							onChange={this.handleInput} />
-					</div>
-
-
-
-					<button type="submit" className="btn btn-primary mb-5">
-						Submit
-					</button>
-				</form>
-
-				<hr
-					style={{
-						color: "#000000",
-						backgroundColor: "#000000",
-						height: 0.5,
-						borderColor: "#000000",
-					}}
-				/>
-
-				{this.state.details.map((detail, id) => (
-					<div key={id}>
-						<div className="card shadow-lg">
-							<div >Quote {id + 1}</div>
-								<div className="card-body">
-									<blockquote>
-										<h1> {detail.username} </h1>
-										<footer className="blockquote-footer">
-											{" "}
-											<cite title="Source Title">{detail.name}</cite><br></br>
-											<cite title="Source Title">{detail.email}</cite>
-										</footer>
-									</blockquote>
-								</div>
-						</div>
-						<span className="border border-primary "></span>
-					</div>
-				))}
-			</div>
-		);
-	}
-}
-export default Home;
-

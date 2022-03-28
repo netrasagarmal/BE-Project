@@ -2,17 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import 'boxicons';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { DataProvider } from './context/DataContext';
+import { DataContextProvider } from './context/data-context';
 import reportWebVitals from './reportWebVitals';
+import { UserAuthContextProvider } from './context/AuthContext/auth-context';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <DataProvider>
-        <App />
-      </DataProvider>
+      <UserAuthContextProvider>
+        <DataContextProvider>
+          <App />
+        </DataContextProvider>
+      </UserAuthContextProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

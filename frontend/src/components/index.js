@@ -1,6 +1,12 @@
 export { Navbar } from './Navbar';
-export { Banner} from "./Banner";
 export { BannerCarousel } from "./BannerCarousel";
 export { TravelCard } from "./TravelCard";
 export { Solo, Friends, Family } from "./QuestionTCard";
-export { Category } from "../pages/Category";
+export { Category } from "./Category";
+export { Rating } from "./Rating";
+export { RecommendCard } from "./RecommendCard";
+export { PrivateRoute } from "./PrivateRoute";
+export { PopularDesCard } from "./PopularDestination";
+export { Modal } from "./Dialog";
+export { Footer } from "./Footer";
+export { MapCard } from "./MapCard";
