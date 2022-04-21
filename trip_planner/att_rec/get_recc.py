@@ -18,7 +18,7 @@ class getRecom:
         att_df = pd.read_json('G:/ITRS/etl/attractions.json',orient='records')
         return att_df
 
-    def attractionReco(self,ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating):
+    def attractionReco(self,ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rnoOfDays,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating):
 
         #ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating
         print("\n\nattrec 1----------------------------------------------------------------")
@@ -90,7 +90,7 @@ class getRecom:
         final['rating'] = []
         final['category'] = []
 
-        for i in range(1,4):
+        for i in range(1,rnoOfDays):
             for j in range(2):
                 final['timeofday'].append('Morning')
             for j in range(2):

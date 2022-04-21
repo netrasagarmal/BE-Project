@@ -132,7 +132,7 @@ export default function PlanTrip() {
 
    const handleSubmit = async (e) => {
       e.preventDefault();
-      const data = {
+      const dataAtt = {
          uName: 'Sagar Patil',
 
          destinationCity: destinationCity,
@@ -161,12 +161,19 @@ export default function PlanTrip() {
          category5: selection[4].value.toLowerCase().split(' ').join('_'),
          cat5Rating: 1
       };
+      const dataHotel = {
+         cty : destinationCity
+      };
       try {
-         const response = await axios.post(
+         const response1 = await axios.post(
             'http://127.0.0.1:8000/attrec/',
-            data
+            dataAtt
          );
-         if (response.data) {
+         const response2 = await axios.post(
+            'http://127.0.0.1:8000/htlrec/',
+            dataHotel
+         );
+         if (response1.data && response2.data) {
             navigate('/result');
          }
       } catch (error) {

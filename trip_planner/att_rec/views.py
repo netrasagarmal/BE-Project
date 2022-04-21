@@ -57,7 +57,7 @@ class attractionRecommendation(APIView):
             #--------------------------------------------------------------------------------
 
             print("\nData from model training: \n")
-            getRecObj.dataRecomOutput1 = getRecObj.attractionReco(ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating)
+            getRecObj.dataRecomOutput1 = getRecObj.attractionReco(ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rnoOfDays,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating)
             
             #send jso data o frontend
             return Response(getRecObj.dataRecomOutput1)

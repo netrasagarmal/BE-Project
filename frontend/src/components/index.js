@@ -4,7 +4,7 @@ export { TravelCard } from "./TravelCard";
 export { Solo, Friends, Family } from "./QuestionTCard";
 export { Category } from "./Category";
 export { Rating } from "./Rating";
-export { RecommendCard } from "./RecommendCard";
+export { RecommendCardAttraction, RecommendCardHotel } from "./RecommendCard";
 export { ProtectedRoute } from "./ProtectedRoute";
 export { PopularDesCard } from "./PopularDestination";
 export { Modal } from "./Dialog";

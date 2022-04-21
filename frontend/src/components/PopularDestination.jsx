@@ -41,7 +41,8 @@ export const PopularDesCard = (cardData) => {
          <div>
             {open && data && (
                <Modal onOpen={open} onClose={() => handleClose()}>
-                  <DialogTitle>{data.caption}</DialogTitle>
+                  <DialogTitle className='bg-indigo-50'>{data.caption}</DialogTitle>
+                  <hr className='bg-gray-400 w-full h-0.5' />
                   <DialogContent>{data.desc}</DialogContent>
                </Modal>
             )}

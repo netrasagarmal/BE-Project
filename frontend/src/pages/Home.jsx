@@ -1,12 +1,13 @@
 import './pagebg.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
-import { BannerCarousel, PopularDesCard } from '../components';
-import { useEffect } from 'react';
+import { BannerCarousel, PopularDesCard } from '../components';   
 
 export default function Home() {
    const [bannerData, setBannerData] = useState();
+   const navigate = useNavigate();
 
    useEffect(() => {
       (async () => {
@@ -74,9 +75,12 @@ export default function Home() {
                   </p>
                </span>
             </div>
-            <button className="rounded shadow-md bg-gray-300 hover:bg-black hover:text-white text-black right-1 left-1 p-2 w-max">
+            <section className='flex justify-center'>
+            {' '}
+            <button onClick={() => navigate('/plantrip')} className="rounded shadow-md bg-gray-300 hover:bg-black hover:text-white text-black right-1 left-1 p-2 mb-10 w-max">
                Start Planning
             </button>
+            </section>
          </div>
 
          <hr className="bg-gray-400 w-full h-0.5" />

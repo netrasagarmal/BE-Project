@@ -1,26 +1,29 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RecommendCard } from '../components';
+import { RecommendCardAttraction, RecommendCardHotel } from '../components';
 
 export default function Result() {
    // const { isLoading, setLoading } = useLoader();
 
-   const [backendData, setBackendData] = useState([]);
+   const [backendDataAttraction, setBackendDataAttraction] = useState([]);
+   const [backendDataHotel, setBackendDataHotel] = useState([]);
    // console.log('save hot ahe ka', backData);
    const navigate = useNavigate();
 
    const getData = async () => {
       try {
          // setLoading(true);
-         const response = await axios.get('http://127.0.0.1:8000/attrec/');
-         // setBackendData(JSON.parse(response.data));
-         // const backData = JSON.parse(response.data);
-         // console.log('respo', backData.name[0]);
-         // backendData = backData;
-         // console.log('parse', backData);
-         console.log('respo', response.data);
-         setBackendData(response.data);
+         const response1 = await axios.get('http://127.0.0.1:8000/attrec/');
+         console.log('response 1:', response1.data);
+         //------------------------------------------------------------------------
+         const response2 = await axios.get('http://127.0.0.1:8000/htlrec/');
+         console.log('response 2:', response2.data);
+         console.log('response 2 add:', response2.data.address);
+
+
+         setBackendDataAttraction(response1.data);
+         setBackendDataHotel(response2.data);
          // backData = response.data;
       } catch (error) {
          console.log(error);
@@ -31,21 +34,31 @@ export default function Result() {
       getData();
    }, []);
 
-   console.log('setState', backendData);
+   console.log('setState Attraction:', backendDataAttraction);
+   console.log('setState Hotel:', backendDataHotel);
    // console.log('name', backendData.name[0]);
 
    return (
       <div>
          <section className="">
-            {backendData.length > 0 &&
-               backendData.map((item, index) => {
+            <h1>Attraction Recommendation</h1>
+            <br></br>
+            {backendDataAttraction.length > 0 &&
+               backendDataAttraction.map((item, index) => {
                   return (
                      <div key={`${item.value}-${index}`}>
-                        <RecommendCard value={item} />
+                        <RecommendCardAttraction value={item} />
                      </div>
                   );
                })}
          </section>
+
+         <section className="">
+            <h1>Hotel Recommendation:</h1>
+            <br></br>
+               <RecommendCardHotel value={backendDataHotel} />
+         </section>
+
          <div className="flex justify-center align items-center space-x-5 my-4">
             <button
                onClick={() => navigate('/plantrip')}
