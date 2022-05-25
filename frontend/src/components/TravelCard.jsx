@@ -1,8 +1,4 @@
-import { useState } from 'react';
-
 export const TravelCard = ({ tCard, tCardHandler }) => {
-   const [editorState, setEditorState] = useState(null);
-
    return (
       <div className="flex mt-1.5">
          {tCard.map(({ id, type, url }) => (

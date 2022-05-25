@@ -25,7 +25,7 @@ const marks = [
 
 export const Rating = ({ value }) => {
    return (
-      <div className=" border-2 px-4 rounded m-2 border-gray-300 border-dashed">
+      <div className="w-full border-2 px-4 rounded border-gray-300 border-dashed">
          <p className="">{value}</p>
          <Slider
             className=""

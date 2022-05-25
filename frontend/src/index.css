@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 body {
-   font-family: 'Inter', sans-serif;
+   font-family: 'Raleway', sans-serif;
 }
 ::-webkit-scrollbar {
    width: 3px;
@@ -145,6 +145,27 @@ body {
    }
 }
 
+.anim-typewriterREC {
+   animation: typewriter 4s steps(44) 1s 1 normal both,
+      blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+   from {
+      width: 0;
+   }
+   to {
+      width: 20em;
+   }
+}
+@keyframes blinkTextCursor {
+   from {
+      border-right-color: rgba(255, 255, 255, 0.75);
+   }
+   to {
+      border-right-color: transparent;
+   }
+}
+
 /* --------------------------------------------------------------- */
 
 footer {
@@ -264,3 +285,20 @@ footer {
       grid-column: span 9;
    }
 }
+
+/* ---------------------------------------------------------------------------------- */
+
+.navbar {
+   overflow: hidden;
+   position: fixed;
+   top: 0;
+   width: 100%;
+ }
+
+ /* ---------------------------------------------------------------------------------------- */
+ 
+ .override {
+   display: block;
+   margin: 0 auto;
+   border-color: red;
+ }

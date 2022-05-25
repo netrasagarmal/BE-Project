@@ -1,6 +1,6 @@
 import './pagebg.css';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
 import { BannerCarousel, PopularDesCard, Footer } from '../components';
 import { useEffect } from 'react';
@@ -79,11 +79,11 @@ export default function Home() {
                   </p>
                </span>
             </div>
-            <section className="flex justify-center">
+            <section className="flex justify-center mb-10">
                {' '}
                <button
                   onClick={() => navigate('/plantrip')}
-                  className="transition duration-500 ease-in-out rounded shadow-md hover:text-white hover:bg-black bg-gray-300 p-2 mb-10 w-auto"
+                  className="animated-box in font-semibold text-xl"
                >
                   Start Planning
                </button>

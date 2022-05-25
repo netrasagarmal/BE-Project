@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { db } from '../firebase-config';
+import { createContext, useContext, useState } from 'react';
+import { db, realdb } from '../firebase-config';
+import firebase from "firebase";
 
 const dataContext = createContext();
 
@@ -17,7 +18,7 @@ export function DataContextProvider({ children }) {
    }
 
    return(
-      <dataContext.Provider value={getData}>
+      <dataContext.Provider value={{getData}}>
          {children}
       </dataContext.Provider>
    )

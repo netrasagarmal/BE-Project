@@ -1,0 +1,80 @@
+html, body {
+  height: 100%;
+}
+.column {
+    float: left;
+    width: 25%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  
+  .backgroundImg{
+    /* width:100%;
+    margin:auto;
+    height:700; 
+    opacity:0.5; */
+    /* position: absolute; */
+    height:100%;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.9)), 
+    url(https://firebasestorage.googleapis.com/v0/b/trip-planner-9213c.appspot.com/o/Background%20Img%2FaboutusBackground.jpg?alt=media&token=0e9326ae-4963-4141-97c4-895e880bee4f); 
+   background-repeat: no-repeat;
+   background-size: cover;
+   opacity: 0.9;
+  }
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+  }
+  
+  .about-section {
+    /* padding: 50px; */
+    text-align: center;
+    /* background-color: #474e5d; */
+    /* background-image: url('/frontend/public/images/aboutUsBackground.jfif'); */
+    color: white;
+    /* opacity: 0.9; */
+    /* position: relative; */
+    /* margin-bottom: 90px; */
+    margin:auto;
+    width:98%;
+    height:90vh; 
+
+  }
+  
+  .container {
+    padding: 0 16px;
+  }
+  
+  .container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .title {
+    color: grey;
+  }
+  
+  .button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .button:hover {
+    background-color: #555;
+  }
+
+  .img{
+      height:150px;
+      width:150px;
+      border-radius:50%;
+      margin: auto;
+  }

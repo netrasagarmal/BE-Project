@@ -4,10 +4,11 @@ import './pagebg.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { Category, Rating, Footer } from '../components';
+import { Category, Rating } from '../components';
 import Slider from '@mui/material/Slider';
 import format from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader';
 
 const categories = [
    {
@@ -93,14 +94,27 @@ const categories = [
 ];
 
 export default function PlanTrip() {
+   const override = {
+      height: '200px',
+      position: 'relative',
+      margin: '0',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+   };
+
+   //----------------------Store select Date---------------------------
    const [dateRange, setDateRange] = useState([null, null]);
    const [startDate, endDate] = dateRange;
+   // const [tripStatus, setTripStatus] = useState(null);
    const [budgetValue, setBudgetValue] = useState([0, 2000]);
    const [selection, setSelection] = useState([]);
    const [startCity, setStartCity] = useState('');
    const [returnCity, setreturnCity] = useState('');
    const [destinationCity, setDestinationCity] = useState('');
-   // const [rating, setRating] = useState([]);
+   const [loading, setLoading] = useState(false);
+
    const navigate = useNavigate();
 
    const handleChange = (event, newValue) => {
@@ -127,7 +141,7 @@ export default function PlanTrip() {
 
    const handleSubmit = async (e) => {
       e.preventDefault();
-      const data = {
+      const dataAtt = {
          uName: 'Sagar Patil',
 
          destinationCity: destinationCity,
@@ -156,12 +170,21 @@ export default function PlanTrip() {
          category5: selection[4].value.toLowerCase().split(' ').join('_'),
          cat5Rating: 1
       };
+      const dataHotel = {
+         cty: destinationCity
+      };
       try {
-         const response = await axios.post(
+         setLoading(true);
+         const response1 = await axios.post(
             'http://127.0.0.1:8000/attrec/',
-            data
+            dataAtt
          );
-         if (response.data) {
+         const response2 = await axios.post(
+            'http://127.0.0.1:8000/htlrec/',
+            dataHotel
+         );
+         setLoading(false);
+         if (response1.data && response2.data) {
             navigate('/result');
          }
       } catch (error) {
@@ -171,136 +194,139 @@ export default function PlanTrip() {
 
    return (
       <>
-         <div className="flex flex-col h-full h-full">
-            <div className="border-solid outline-none rounded p-3 max-h-full">
-               <div className="max-h-full">
-                  <div>
-                     <form onSubmit={handleSubmit} className="p-3">
-                        <div className=" mt-1.5">
-                           <label className="font-medium text-base">
-                              Where do you want to go?
-                           </label>
-                           <input
-                              name="whereDoUWanaGo"
-                              type="text"
-                              required={true}
-                              placeholder="Where do you want to go?"
-                              onChange={(e) =>
-                                 setDestinationCity(e.target.value)
-                              }
-                              className="border border-gray-400 border-dashed rounded p-2 w-full m-1.5 focus:border-black outline-none"
-                           />
-                        </div>
+         <div
+            className={`${
+               loading ? 'hidden' : 'flex flex-col h-auto planTripbg'
+            }`}
+         >
+            <form
+               onSubmit={handleSubmit}
+               className="py-3 planTripbgdiv m-16 px-8 bg-white"
+            >
+               <div className="flex flex-wrap md:flex-nowrap justify-between mt-1.5 ">
+                  <div className="flex flex-col w-full">
+                     <label className="font-medium text-base">
+                        Where do you want to go?
+                     </label>
+                     <input
+                        name="whereDoUWanaGo"
+                        type="text"
+                        required={true}
+                        placeholder="Where do you want to go?"
+                        onChange={(e) => setDestinationCity(e.target.value)}
+                        className="border border-gray-400 border-dashed rounded p-2 focus:border-black outline-none mt-1.5"
+                     />
+                  </div>
 
-                        <div className="flex mt-1.5">
-                           <div className="w-1/2 mt-1.5 mr-4">
-                              <label className="font-medium text-base">
-                                 Start City
-                              </label>
-                              <input
-                                 name="startCity"
-                                 type="text"
-                                 required={true}
-                                 placeholder="Start City"
-                                 onChange={(e) => setStartCity(e.target.value)}
-                                 className="border border-gray-400 border-dashed w-full rounded p-2 mx-2 focus:border-black outline-none mt-1.5"
-                              />
-                           </div>
+                  <div className="flex flex-col w-full md:mx-4 mx-0">
+                     <label className="font-medium text-base">Start City</label>
+                     <input
+                        name="startCity"
+                        type="text"
+                        required={true}
+                        placeholder="Start City"
+                        onChange={(e) => setStartCity(e.target.value)}
+                        className="border border-gray-400 border-dashed rounded p-2 focus:border-black outline-none mt-1.5"
+                     />
+                  </div>
 
-                           <div className="w-1/2 mt-1.5">
-                              <label className="font-medium text-base">
-                                 End City
-                              </label>
-                              <input
-                                 type="text"
-                                 name="returnCity"
-                                 required={true}
-                                 placeholder="End City"
-                                 onChange={(e) => setreturnCity(e.target.value)}
-                                 className="border border-gray-400 border-dashed w-full rounded p-2 mx-2 focus:border-black outline-none mt-1.5"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="w-auto mt-1.5">
-                           <label className="font-medium text-base">
-                              Select Date
-                           </label>
-                           <DatePicker
-                              className="border border-gray-400 border-dashed rounded w-full p-2 mx-1.5 focus:border-black border-dashed outline-none mt-1.5"
-                              selectsRange={true}
-                              startDate={startDate}
-                              required={true}
-                              endDate={endDate}
-                              onChange={(update) => {
-                                 setDateRange(update);
-                              }}
-                              placeholderText="Select Date"
-                           />
-                        </div>
-
-                        <div className="w-auto mt-1.5 flex flex-col justify-between">
-                           <label className="font-medium text-base">
-                              Budget (USD)
-                           </label>
-                           <div className="px-6 mt-8">
-                              <Slider
-                                 getAriaLabel={() => 'Price range'}
-                                 value={budgetValue}
-                                 onChange={handleChange}
-                                 min={0}
-                                 valueLabelDisplay="on"
-                                 max={10000}
-                                 getAriaValueText={valuetext}
-                              />
-                           </div>
-                        </div>
-
-                        <div className="">
-                           <label className="font-medium text-base">
-                              Select At-least 5 Categories
-                           </label>
-
-                           <div className="grid grid-cols-4 p-4">
-                              {categories.map((item, index) => {
-                                 return (
-                                    <div
-                                       key={item.id}
-                                       onClick={() => handleSelection(item)}
-                                    >
-                                       <Category
-                                          key={`${item.value}-${index}`}
-                                          value={item.value}
-                                          selected={isListSelected(item.id)}
-                                       />
-                                    </div>
-                                 );
-                              })}
-                           </div>
-                           <div className="flex justify-center flex-wrap">
-                              {selection.length >= 5 &&
-                                 selection.map((item) => {
-                                    return (
-                                       <div key={item.id}>
-                                          <Rating value={item.value} />
-                                       </div>
-                                    );
-                                 })}
-                           </div>
-
-                           <section className="flex justify-center">
-                              {' '}
-                              <button className="transition duration-500 ease-in-out rounded shadow-md hover:text-white hover:bg-black bg-gray-300 p-2 w-20">
-                                 Submit
-                              </button>
-                           </section>
-                        </div>
-                     </form>
+                  <div className="flex flex-col w-full">
+                     <label className="font-medium text-base">End City</label>
+                     <input
+                        type="text"
+                        name="returnCity"
+                        required={true}
+                        placeholder="End City"
+                        onChange={(e) => setreturnCity(e.target.value)}
+                        className="border border-gray-400 border-dashed rounded p-2 focus:border-black outline-none mt-1.5"
+                     />
                   </div>
                </div>
-            </div>
-            <Footer />
+
+               <div className="flex mt-3 justify-between">
+                  <div className="flex flex-col w-full mr-4">
+                     <label className="font-medium text-base">
+                        Select Date
+                     </label>
+                     <DatePicker
+                        className="border border-gray-400 border-dashed rounded p-2 w-full focus:border-black border-dashed outline-none mt-1.5"
+                        selectsRange={true}
+                        startDate={startDate}
+                        required={true}
+                        endDate={endDate}
+                        onChange={(update) => {
+                           setDateRange(update);
+                        }}
+                        placeholderText="Select Date"
+                     />
+                  </div>
+
+                  <div className="flex flex-col w-full">
+                     <label className="font-medium text-base">
+                        Budget (USD)
+                     </label>
+                     <div className="px-6 mt-8">
+                        <Slider
+                           getAriaLabel={() => 'Price range'}
+                           value={budgetValue}
+                           onChange={handleChange}
+                           min={0}
+                           valueLabelDisplay="on"
+                           max={10000}
+                           getAriaValueText={valuetext}
+                        />
+                     </div>
+                  </div>
+               </div>
+
+               <div className="">
+                  <label className="font-medium text-base">
+                     Select At-least 5 Categories
+                  </label>
+
+                  <div className="grid grid-cols-3 md:grid-cols-5 mt-4">
+                     {categories.map((item, index) => {
+                        return (
+                           <div
+                              key={item.id}
+                              onClick={() => handleSelection(item)}
+                           >
+                              <Category
+                                 key={`${item.value}-${index}`}
+                                 value={item.value}
+                                 selected={isListSelected(item.id)}
+                              />
+                           </div>
+                        );
+                     })}
+                  </div>
+                  <div className="flex justify-evenly my-4 flex-wrap">
+                     {selection.length >= 5 &&
+                        selection.map((item) => {
+                           return (
+                              <div key={item.id}>
+                                 <Rating value={item.value} />
+                              </div>
+                           );
+                        })}
+                  </div>
+
+                  <section className="flex justify-center">
+                     {' '}
+                     <button className="rounded shadow-md hover:text-white hover:bg-black bg-gray-300 p-2 w-20">
+                        Submit
+                     </button>
+                  </section>
+               </div>
+            </form>
          </div>
+         <HashLoader
+            color={'#000000'}
+            loading={loading}
+            css={override}
+            size={100}
+            speedMultiplier={1}
+         />
       </>
    );
 }

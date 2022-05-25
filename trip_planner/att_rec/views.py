@@ -5,19 +5,27 @@ from rest_framework.response import Response
 from . serializers import *
 import json
 import pickle
+import pandas as pd
+import re
+import sys
+from .attractions_recc import *
+from .get_recc import *
 
-# Create your views here.
-
-#serializer_class = AttractionReccSerializer
+getRecObj = getRecom()
 
 class attractionRecommendation(APIView):
 
     serializer_class = AttractionReccSerializer
+
     def post(self, request):
   
         serializer = AttractionReccSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
 
+            
+            print(serializer.data)
+
+            #--------------------------------------------------------------------------------
             ruName = serializer.data['uName']
 
             rdestinationCity = serializer.data['destinationCity']
@@ -27,8 +35,8 @@ class attractionRecommendation(APIView):
             rminBudget = serializer.data['minBudget']
             rmaxBudget = serializer.data['maxBudget']
 
-            #rstartDate = serializer.data['startDate']
-            #rendDate = serializer.data['endDate']
+            rstartDate = serializer.data['startDate']
+            rendDate = serializer.data['endDate']
             rnoOfDays = serializer.data['noOfDays']
 
             rcategory1 = serializer.data['category1']
@@ -45,11 +53,59 @@ class attractionRecommendation(APIView):
 
             rcategory5 = serializer.data['category5']
             rcat5Rating = serializer.data['cat5Rating']
-            print(serializer.data)
-            #print(ruName)
-            return Response("Data received at backend . . .")
+
+            #--------------------------------------------------------------------------------
+
+            print("\nData from model training: \n")
+            getRecObj.dataRecomOutput1 = getRecObj.attractionReco(ruName,rdestinationCity,rminBudget,rmaxBudget,rstartDate,rendDate,rnoOfDays,rcategory1,rcat1Rating,rcategory2,rcat2Rating,rcategory3,rcat3Rating,rcategory4,rcat4Rating,rcategory5,rcat5Rating)
+            
+            #send jso data o frontend
+            return Response(getRecObj.dataRecomOutput1)
         
         return Response("Data Not Received")
+
+    def get(self, request):
+        #x = self.dataRecomOutput1
+        #print("\n\n\t Received data from variable")
+        #print(x)
+        #recomOutput = [x]
+        #recomOutput = json.dumps(recomOutput, indent=4)
+        recomOutput={}
+        recomOutput = getRecObj.dataRecomOutput1
+        recomOutput = json.loads(recomOutput)
+        print("\n\n print fron get request \n\n")
+        print(recomOutput)
+        convertedData = []
+        tempDict = {}
+
+        l1=[]
+        l2=[]
+        l1 = [(k) for k in recomOutput.keys()]
+        
+        print(l1)
+        l2 = recomOutput[l1[0]]
+
+
+        for i in range(len(l2)):
+            for j in range(len(l1)):
+                x = recomOutput[l1[j]]
+                tempDict[l1[j]] = x[i]
+            convertedData.append(tempDict)
+            tempDict = {}
+            
+        
+        convertedData = json.dumps(convertedData)
+
+        getRecObj.dataRecomOutput2 = convertedData
+        
+        #res1= pickle.dumps(convertedData)
+        #res1= json.dumps(convertedData)
+        
+        #getRecObj.dataRecomOutput2 = pickle.loads(res1)
+        res2 = json.loads(convertedData)
+        print("\n\n print object from data \n\n")
+        print(getRecObj.dataRecomOutput2)
+        return Response(res2)
 
 # create a object
 class Sample(APIView):
@@ -138,4 +194,3 @@ class Sample(APIView):
             print(serializer.data)
             return  Response(res1)
         return Response("Data Not Received")
-        

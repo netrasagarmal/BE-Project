@@ -18,7 +18,7 @@ export const Navbar = () => {
    };
 
    return (
-      <nav className="flex items-center justify-between px-2  pt-2 flex-wrap">
+      <nav className="flex items-center justify-between px-2 pt-2 flex-wrap bg-white">
          <NavLink to="/" className="p-2 mr-4 inline-flex bg-white items-center">
             <h1 className="text-xl text-gray-900 font-bold uppercase tracking-wide py-0">
                Trip Planner

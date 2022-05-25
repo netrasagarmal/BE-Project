@@ -6,7 +6,7 @@ export default function Signup() {
    const [name, setName] = useState('');
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
-   const { signUp, user, updateProfil } = useUserAuth();
+   const { signUp, updateProfil } = useUserAuth();
    const navigate = useNavigate();
 
    const handleSubmit = async (e) => {
@@ -19,13 +19,6 @@ export default function Signup() {
          console.log(err.message);
       }
    };
-
-   const updateProfile = () => (
-      user,
-      {
-         displayName: name
-      }
-   );
 
    return (
       <div className="flex items-center backgroundImage">

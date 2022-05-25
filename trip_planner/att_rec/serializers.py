@@ -38,8 +38,8 @@ class AttractionReccSerializer(serializers.Serializer):
     minBudget = serializers.IntegerField()
     maxBudget = serializers.IntegerField()
 
-    #startDate = serializers.DateField()
-    #endDate = serializers.DateField()
+    startDate = serializers.DateField()
+    endDate = serializers.DateField()
     noOfDays = serializers.IntegerField()
 
     category1 = serializers.CharField(max_length=30)

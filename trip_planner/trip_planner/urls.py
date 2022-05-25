@@ -16,11 +16,16 @@ Including another URLconf
 from random import sample
 from django.contrib import admin
 from django.urls import path, include
+
 from att_rec.views import *
 from att_rec.urls import *
+
+from htl_rec.views import *
+from htl_rec.urls import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('sample/', Sample.as_view(), name="something"),
     path('',include('att_rec.urls')),
+    path('',include('htl_rec.urls')),
 ]

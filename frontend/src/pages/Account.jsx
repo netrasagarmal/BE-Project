@@ -1,9 +1,11 @@
 import React from 'react';
 import { Footer } from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/AuthContext/auth-context';
 
 export default function Account() {
    const { user } = useUserAuth();
+   const navigate = useNavigate();
 
    return (
       <div>
@@ -12,7 +14,12 @@ export default function Account() {
             <p className="mx-4 text-lg">
                <b>{user.displayName}</b>, {user.email} ·{' '}
                <b>
-                  <u className="cursor-pointer">Go to profile</u>
+                  <u
+                     className="cursor-pointer"
+                     onClick={() => navigate('/profile')}
+                  >
+                     Go to profile
+                  </u>
                </b>
             </p>
 
